@@ -103,11 +103,25 @@ def db_insert(statsheet, schema):
         opponent1_tuple = tuple(stats_df.iloc[:, 5:10].itertuples(index=False, name=None))
         gamedetails_tuple = tuple(stats_df.iloc[:, 10:11].itertuples(index=False, name=None))
 
-        for game in range(len(mystats_tuple)):
-            print(mystats_sql % mystats_tuple[game])
+        try:
+            insert_connection = get_db_connection()
+            if insert_connection is not None:
+                with insert_connection.cursor() as cursor:
+                    for game in range(len(mystats_tuple)):
+                        cursor.execute(mystats_sql % mystats_tuple[game])
+                    print(f'{game + 1} mystats {schema} games inserted')
 
-        for game in range(len(opponent1_tuple)):
-            print(opponent1_sql % opponent1_tuple[game])
+                    for game in range(len(opponent1_tuple)):
+                        cursor.execute(opponent1_sql % opponent1_tuple[game])
+                    print(f'{game + 1} opponent1 {schema} games inserted')
+
+        except Exception as e:
+            print(e)
+            return "Error getting max gameid"
+        finally:
+            if insert_connection is not None:
+                insert_connection.commit()
+                insert_connection.close()
 
     elif schema == 'doubles':
 
@@ -128,7 +142,7 @@ def db_insert(statsheet, schema):
 
                     for game in range(len(teammate1_tuple)):
                         cursor.execute(teammate1_sql % teammate1_tuple[game])
-                    print(f'{game + 1} teammate {schema} games inserted')
+                    print(f'{game + 1} teammate1 {schema} games inserted')
 
                     for game in range(len(opponent1_tuple)):
                         cursor.execute(opponent1_sql % opponent1_tuple[game])
@@ -139,7 +153,7 @@ def db_insert(statsheet, schema):
                     print(f'{game + 1} opponent2 {schema} games inserted')
 
                     for game in range(len(gamedetails_tuple)):
-                        cursor.execute(gamedetails_sql % gamedetails_tuple[game],)
+                        cursor.execute(gamedetails_sql % gamedetails_tuple[game], )
                     print(f'{game + 1} {schema} gamedetails inserted')
 
         except Exception as e:
@@ -159,26 +173,45 @@ def db_insert(statsheet, schema):
         opponent3_tuple = tuple(stats_df.iloc[:, 25:30].itertuples(index=False, name=None))
         gamedetails_tuple = tuple(stats_df.iloc[:, 30:32].itertuples(index=False, name=None))
 
-        for game in range(len(mystats_tuple)):
-            print(mystats_sql % mystats_tuple[game])
+        try:
+            insert_connection = get_db_connection()
+            if insert_connection is not None:
+                with insert_connection.cursor() as cursor:
+                    for game in range(len(mystats_tuple)):
+                        cursor.execute(mystats_sql % mystats_tuple[game])
+                    print(f'{game + 1} mystats {schema} games inserted')
 
-        for game in range(len(teammate1_tuple)):
-            print(teammate1_sql % teammate1_tuple[game])
+                    for game in range(len(teammate1_tuple)):
+                        cursor.execute(teammate1_sql % teammate1_tuple[game])
+                    print(f'{game + 1} teammate1 {schema} games inserted')
 
-        for game in range(len(teammate2_tuple)):
-            print(teammate2_sql % teammate2_tuple[game])
+                    for game in range(len(teammate2_tuple)):
+                        cursor.execute(teammate2_sql % teammate2_tuple[game])
+                    print(f'{game + 1} teammate2 {schema} games inserted')
 
-        for game in range(len(opponent1_tuple)):
-            print(opponent1_sql % opponent1_tuple[game])
+                    for game in range(len(opponent1_tuple)):
+                        cursor.execute(opponent1_sql % opponent1_tuple[game])
+                    print(f'{game + 1} opponent1 {schema} games inserted')
 
-        for game in range(len(opponent2_tuple)):
-            print(opponent2_sql % opponent2_tuple[game])
+                    for game in range(len(opponent2_tuple)):
+                        cursor.execute(opponent2_sql % opponent2_tuple[game])
+                    print(f'{game + 1} opponent2 {schema} games inserted')
 
-        for game in range(len(opponent3_tuple)):
-            print(opponent3_sql % opponent3_tuple[game])
+                    for game in range(len(opponent3_tuple)):
+                        cursor.execute(opponent3_sql % opponent3_tuple[game])
+                    print(f'{game + 1} opponent3 {schema} games inserted')
 
-        for game in range(len(gamedetails_tuple)):
-            print(gamedetails_sql % gamedetails_tuple[game])
+                    for game in range(len(gamedetails_tuple)):
+                        cursor.execute(gamedetails_sql % gamedetails_tuple[game], )
+                    print(f'{game + 1} {schema} gamedetails inserted')
+
+        except Exception as e:
+            print(e)
+            return "Error getting max gameid"
+        finally:
+            if insert_connection is not None:
+                insert_connection.commit()
+                insert_connection.close()
 
 
 def main(args):
