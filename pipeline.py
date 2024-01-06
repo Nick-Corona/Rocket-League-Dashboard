@@ -94,7 +94,7 @@ def db_insert(statsheet, schema):
     opponent1_sql = f'insert into {schema}.opponent1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
     opponent2_sql = f'insert into {schema}.opponent2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
     opponent3_sql = f'insert into {schema}.opponent3 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
-    gamedetails_sql = f"""insert into {schema}.gamedetails (overtime, comms) values (%s, %s)"""
+    gamedetails_sql = f"""insert into {schema}.gamedetails (overtime, comms) values (%s, '%s')"""
 
     mystats_tuple = tuple(stats_df.iloc[:, 0:5].itertuples(index=False, name=None))
 
