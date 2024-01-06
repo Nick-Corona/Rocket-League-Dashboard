@@ -131,7 +131,8 @@ def db_insert(statsheet, schema):
         opponent1_tuple = tuple(stats_df.iloc[:, 10:15].itertuples(index=False, name=None))
         opponent2_tuple = tuple(stats_df.iloc[:, 15:20].itertuples(index=False, name=None))
         gamedetails_clean = stats_df.iloc[:, 20:22].copy()
-        gamedetails_clean.replace([None, 'None', ''], 'Solo queue', inplace=True)
+        gamedetails_clean['Overtime'].replace([None, 'None', ''], 'null', inplace=True)
+        gamedetails_clean['Comms'].replace([None, 'None', ''], 'Solo queue', inplace=True)
         gamedetails_tuple = tuple(gamedetails_clean.itertuples(index=False, name=None))
 
         try:
@@ -155,7 +156,7 @@ def db_insert(statsheet, schema):
                     print(f'{game + 1} opponent2 {schema} games inserted')
 
                     for game in range(len(gamedetails_tuple)):
-                        cursor.execute(gamedetails_sql % gamedetails_tuple[game], )
+                        cursor.execute(gamedetails_sql % gamedetails_tuple[game])
                     print(f'{game + 1} {schema} gamedetails inserted')
 
         except Exception as e:
