@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import pygsheets
 import pandas as pd
 import psycopg2
@@ -42,16 +44,16 @@ def get_max_gameid(schema):
                 return cursor.fetchone()[0]
     except Exception as e:
         print(e)
-        return "Error getting max gameid"
+        return 'Error getting max gameid'
     finally:
         if maxid_connection is not None:
             maxid_connection.close()
 
 def get_google_sheet(gameid, tab):
-    spreadsheetid = "17Jwl9XNratzqjvprgJIRa2BG5OEm5ZODtOAMPhQuWlo"
+    spreadsheetid = '17Jwl9XNratzqjvprgJIRa2BG5OEm5ZODtOAMPhQuWlo'
 
     #client = pygsheets.authorize(client_secret = "credentials.json")
-    client = pygsheets.authorize(service_file="service_account_keys.json")
+    client = pygsheets.authorize(service_file='service_account_keys.json')
 
     spreadsheet = client.open_by_key(spreadsheetid)
     worksheet = spreadsheet.worksheet_by_title(tab)
@@ -60,10 +62,10 @@ def get_google_sheet(gameid, tab):
     togameid = str(len(worksheet.get_all_values(include_tailing_empty_rows=False, include_tailing_empty=False)))
 
     if fromgameid == togameid:
-        return "No new games added"
+        return 'No new games added'
     elif fromgameid > togameid:
         #raise ValueError(f"ERROR: More games in database: {fromgameid} than Google Sheet: {togameid}")
-        return f"ERROR: More games in database: {fromgameid} than Google Sheet: {togameid}"
+        return f'ERROR: More games in database: {fromgameid} than Google Sheet: {togameid}'
 
     if tab == '1v1':
         column = 'K'
@@ -73,7 +75,7 @@ def get_google_sheet(gameid, tab):
         column = 'AF'
 
     try:
-        statsheet = worksheet.get_values(start=f"A{fromgameid}", end=f"{column}{togameid}", include_tailing_empty_rows=False, include_tailing_empty=False, returnas='matrix')
+        statsheet = worksheet.get_values(start=f'A{fromgameid}', end=f'{column}{togameid}', include_tailing_empty_rows=False, include_tailing_empty=False, returnas='matrix')
     except Exception as e:
         return e
 
@@ -86,19 +88,19 @@ def db_insert(statsheet, schema):
     stats_df = stats_df[1:]
     #stats_df = stats_df.iloc[:,20:22].replace([None, 'None'], 'null', inplace=True)
 
-    mystats_sql = f"insert into {schema}.mystats (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    teammate1_sql = f"insert into {schema}.teammate1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    teammate2_sql = f"insert into {schema}.teammate2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    opponent1_sql = f"insert into {schema}.opponent1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    opponent2_sql = f"insert into {schema}.opponent2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    opponent3_sql = f"insert into {schema}.opponent3 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)"
-    gamedetails_sql = f"insert into {schema}.gamedetails (overtime, comms) values (%s, '%s')"
+    mystats_sql = f'insert into {schema}.mystats (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    teammate1_sql = f'insert into {schema}.teammate1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    teammate2_sql = f'insert into {schema}.teammate2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    opponent1_sql = f'insert into {schema}.opponent1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    opponent2_sql = f'insert into {schema}.opponent2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    opponent3_sql = f'insert into {schema}.opponent3 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
+    gamedetails_sql = f"""insert into {schema}.gamedetails (overtime, comms) values (%s, '%s')"""
 
     mystats_tuple = tuple(stats_df.iloc[:, 0:5].itertuples(index=False, name=None))
 
     if schema == 'solo':
 
-        gamedetails_sql = f"insert into {schema}.gamedetails (overtime) values (%s)"
+        gamedetails_sql = f'insert into {schema}.gamedetails (overtime) values (%s)'
 
         opponent1_tuple = tuple(stats_df.iloc[:, 5:10].itertuples(index=False, name=None))
         gamedetails_tuple = tuple(stats_df.iloc[:, 10:11].itertuples(index=False, name=None))
@@ -117,7 +119,7 @@ def db_insert(statsheet, schema):
 
         except Exception as e:
             print(e)
-            return "Error getting max gameid"
+            return 'Error getting max gameid'
         finally:
             if insert_connection is not None:
                 insert_connection.commit()
@@ -158,7 +160,7 @@ def db_insert(statsheet, schema):
 
         except Exception as e:
             print(e)
-            return "Error getting max gameid"
+            return 'Error getting max gameid'
         finally:
             if insert_connection is not None:
                 insert_connection.commit()
@@ -207,7 +209,7 @@ def db_insert(statsheet, schema):
 
         except Exception as e:
             print(e)
-            return "Error getting max gameid"
+            return 'Error getting max gameid'
         finally:
             if insert_connection is not None:
                 insert_connection.commit()
@@ -218,17 +220,17 @@ def main(args):
     tab = None
     schema = None
 
-    if args == "1":
-        tab = "1v1"
-        schema = "solo"
-    elif args == "2":
-        tab = "2v2"
-        schema = "doubles"
-    elif args == "3":
-        tab = "3v3"
-        schema = "trios"
+    if args == '1':
+        tab = '1v1'
+        schema = 'solo'
+    elif args == '2':
+        tab = '2v2'
+        schema = 'doubles'
+    elif args == '3':
+        tab = '3v3'
+        schema = 'trios'
     else:
-        print(f"Invalid argument: {str(args)} expected 1,2,3")
+        print(f'Invalid argument: {str(args)} expected 1,2,3')
 
     last_db_game = get_max_gameid(schema)
     google_sheet = get_google_sheet(last_db_game, tab)
