@@ -131,7 +131,7 @@ def db_insert(statsheet, schema):
         opponent1_tuple = tuple(stats_df.iloc[:, 10:15].itertuples(index=False, name=None))
         opponent2_tuple = tuple(stats_df.iloc[:, 15:20].itertuples(index=False, name=None))
         gamedetails_clean = stats_df.iloc[:, 20:22].copy()
-        gamedetails_clean.replace([None, 'None', ''], 'null', inplace=True)
+        gamedetails_clean.replace([None, 'None', ''], 'Solo queue', inplace=True)
         gamedetails_tuple = tuple(gamedetails_clean.itertuples(index=False, name=None))
 
         try:
