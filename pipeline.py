@@ -94,7 +94,7 @@ def db_insert(statsheet, schema):
     opponent1_sql = f'insert into {schema}.opponent1 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
     opponent2_sql = f'insert into {schema}.opponent2 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
     opponent3_sql = f'insert into {schema}.opponent3 (score, goals, assists, saves, shots) values (%s, %s, %s, %s, %s)'
-    gamedetails_sql = f"""insert into {schema}.gamedetails (overtime, comms) values (%s, '%s')"""
+    gamedetails_sql = f"""insert into {schema}.gamedetails (overtime, comms) values (%s, %s)"""
 
     mystats_tuple = tuple(stats_df.iloc[:, 0:5].itertuples(index=False, name=None))
 
@@ -173,7 +173,10 @@ def db_insert(statsheet, schema):
         opponent1_tuple = tuple(stats_df.iloc[:, 15:20].itertuples(index=False, name=None))
         opponent2_tuple = tuple(stats_df.iloc[:, 20:25].itertuples(index=False, name=None))
         opponent3_tuple = tuple(stats_df.iloc[:, 25:30].itertuples(index=False, name=None))
-        gamedetails_tuple = tuple(stats_df.iloc[:, 30:32].itertuples(index=False, name=None))
+        gamedetails_tuple = tuple(stats_df.iloc[:, 30:32].itertuples(index=False, name=None)) # refer back to doubles. sumn wrong
+        gamedetails_clean = stats_df.iloc[:, 30:32].copy()
+        gamedetails_clean.replace([None, 'None', ''], 'Solo queue', inplace=True)
+        gamedetails_tuple = tuple(gamedetails_clean.itertuples(index=False, name=None))
 
         try:
             insert_connection = get_db_connection()
