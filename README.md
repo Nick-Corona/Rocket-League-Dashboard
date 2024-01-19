@@ -76,7 +76,7 @@ tables by running the below sql scripts.
 ## Connecting Power BI
 After creating data sources and connecting to my database I created the data model and wrote the DAX expressions needed for analysis.
 
-![Data model](images/doubles data model.png)
+![Data model](images/doublesdatamodel.png)
 
 Then the dashboard is ready for use.
 
