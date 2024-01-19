@@ -12,7 +12,7 @@ and of course scoring goals. I wanted to compare my performance to my teammates 
 anything that will give me a better chance to win each match.
 
 
-![Rocket League Gif](https://i.makeagif.com/media/9-13-2023/NyA8lk.gif)
+![Rocket League Gif](images/rocketleague.gif)
 
 ## Project Workflow
 ![Workflow diagram](images/Workflow%20Diagram.png)
