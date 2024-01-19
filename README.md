@@ -15,7 +15,7 @@ anything that will give me a better chance to win each match.
 ![Rocket League Gif](https://i.makeagif.com/media/9-13-2023/NyA8lk.gif)
 
 ## Project Workflow
-![Workflow diagram](images\Workflow%20Diagram.png)
+![Workflow diagram](images/Workflow%20Diagram.png)
 
 The project workflow is as follows:
 1. After each match, I enter for each player, the score, goals, assists, shots, saves, and overtime length (if applicable) 
@@ -76,10 +76,10 @@ tables by running the below sql scripts.
 ## Connecting Power BI
 After creating data sources and connecting to my database I created the data model and wrote the DAX expressions needed for analysis.
 
-![Data model](images\doubles data model.png)
+![Data model](images/doubles data model.png)
 
 Then the dashboard is ready for use.
 
 https://app.powerbi.com/view?r=eyJrIjoiNTc2M2UyZDQtODAxYS00MDJkLTgzODEtODc4MTRhMzUxNTJmIiwidCI6IjM1ZWE1YjZhLWVjNjEtNGJhYy05N2I3LWE4NGVhYTc2NWZiMyIsImMiOjF9
 
-![Dashboard](images\dashboard.png)
+![Dashboard](images/dashboard.png)
